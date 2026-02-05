@@ -2,13 +2,288 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>NZ HUB</title>
-  <link rel="stylesheet" href="style.css">
+  <title>NZ HUB | NZ on top</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body {
+      color: #cfe2ff;
+      min-height: 100vh;
+      padding: 40px 20px;
+      overflow-x: hidden;
+      background-color: #05070c;
+      position: relative;
+    }
+
+    /* Fondo GIF y overlay oscuro */
+    .bg-gif { position: fixed; top:0; left:0; width:100%; height:100%; z-index:-3; background: url('fondo.gif') center center / cover no-repeat; }
+    .bg-overlay { position: fixed; top:0; left:0; width:100%; height:100%; background-color: rgba(0,0,0,0.85); z-index:-2; }
+
+    /* Partículas futuristas */
+    .particles {
+      position: fixed;
+      top:0; left:0; width:100%; height:100%;
+      pointer-events: none;
+      z-index:-1;
+      overflow:hidden;
+    }
+    .particle {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: #00f0ff;
+      border-radius: 50%;
+      animation: float 10s linear infinite;
+      opacity: 0.7;
+      filter: blur(1px);
+    }
+    @keyframes float {
+      0% { transform: translateY(100vh) translateX(0); }
+      100% { transform: translateY(-10vh) translateX(50px); }
+    }
+
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 60px; }
+    .logo { display: flex; align-items: center; gap: 10px; font-size: 1.5em; font-weight: 700; color: #00bfff; text-shadow: 0 0 15px #00bfff; }
+    .logo img { height: 40px; }
+    .buttons button {
+      margin-left: 10px;
+      background: transparent;
+      border: 2px solid #00bfff;
+      color: #cfe2ff;
+      padding: 10px 18px;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: 0.3s;
+      box-shadow: 0 0 10px #00bfff;
+      text-shadow: 0 0 5px #00f0ff;
+    }
+    .buttons button:hover { background: #00bfff; color: #05070c; box-shadow: 0 0 25px #00f0ff, 0 0 50px #00bfff; }
+
+    .hero { text-align:center; margin-bottom:60px; }
+    .hero h1 { font-size:3em; letter-spacing:3px; margin-bottom:15px; text-shadow: 0 0 20px #00bfff, 0 0 40px #00f0ff, 0 0 60px #00f0ff; animation: neon 2s infinite alternate; }
+    .hero p { color:#cfe2ff; max-width:600px; margin:auto; font-weight:500; }
+    .underline { text-decoration: underline; text-decoration-color: #00f0ff; text-underline-offset:5px; transition: text-decoration-color 0.3s; }
+    .underline:hover { text-decoration-color: #00bfff; }
+
+    @keyframes neon { 0% { text-shadow:0 0 20px #00bfff,0 0 40px #00f0ff; } 100% { text-shadow:0 0 40px #00f0ff,0 0 60px #00bfff,0 0 80px #00f0ff; } }
+
+    .products-row { display:flex; justify-content:center; gap:25px; flex-wrap:wrap; margin-bottom:30px; max-width:1100px; margin-left:auto; margin-right:auto; }
+
+    .product {
+      position: relative;
+      overflow: hidden;
+      background: rgba(0,0,50,0.7);
+      border-radius:15px;
+      padding:20px;
+      text-align:center;
+      border:2px solid rgba(0,180,255,0.5);
+      box-shadow:0 5px 20px rgba(0,180,255,0.3);
+      transition: transform 0.4s, box-shadow 0.4s, filter 0.4s;
+      width:220px; height:320px;
+      cursor:pointer;
+    }
+    .product img { width:100%; height:180px; border-radius:12px; margin-bottom:15px; object-fit:cover; transition: transform 0.4s, filter 0.4s; }
+    .product:hover { transform:scale(1.08); box-shadow:0 0 30px #00f0ff,0 0 60px #00bfff; filter:brightness(1.1); }
+
+    .product h3 { margin-bottom:5px; letter-spacing:1px; color:#00dfff; transition:0.3s; animation: neonTitle 2s infinite alternate; }
+    @keyframes neonTitle { 0% { text-shadow:0 0 5px #00f0ff,0 0 10px #00bfff; } 100% { text-shadow:0 0 10px #00f0ff,0 0 20px #00bfff; } }
+
+    .buy-btn {
+      display:inline-block;
+      margin-top:5px;
+      padding:5px 12px;
+      border:1px solid #00bfff;
+      border-radius:20px;
+      color:#99ccff;
+      text-decoration:none;
+      transition:0.3s, box-shadow 0.3s, transform 0.3s;
+      text-shadow:0 0 5px #00f0ff;
+    }
+    .buy-btn:hover { background:#00bfff; color:#05070c; box-shadow:0 0 20px #00f0ff,0 0 40px #00bfff; transform:scale(1.1); }
+
+    .product::before {
+      content:"";
+      position:absolute;
+      top:-50%; left:-50%;
+      width:200%; height:200%;
+      background:linear-gradient(120deg, rgba(0,255,255,0.05) 0%, rgba(0,255,255,0.2) 50%, rgba(0,255,255,0.05) 100%);
+      transform:rotate(45deg);
+      pointer-events:none;
+      animation: shine 3s linear infinite;
+    }
+    @keyframes shine { 0%{transform:rotate(45deg) translateX(-200%);} 100%{transform:rotate(45deg) translateX(200%);} }
+
+    footer { margin-top:50px; text-align:center; font-size:0.8em; color:#99ccff; opacity:0.9; }
+
+    .modal { display:none; position:fixed; z-index:200; left:0; top:0; width:100%; height:100%; overflow:auto; background-color:rgba(0,0,30,0.85); }
+    .modal-content { background-color:#0a0d17; margin:50px auto; padding:30px; border:2px solid #00bfff; border-radius:15px; max-width:700px; max-height:80%; overflow-y:auto; color:#cfe2ff; line-height:1.5; text-align:center; }
+    .modal-content h2 { color:#00f0ff; margin-bottom:10px; animation: neonTitle 2s infinite alternate; }
+    .close { color:#00f0ff; float:right; font-size:1.5em; font-weight:bold; cursor:pointer; }
+    .close:hover { color:#00bfff; }
+
+    /* Terms & Conditions: texto a la izquierda */
+    .terms-content { text-align: left; margin: 50px auto; }
+
+    @media(max-width:900px){ .products-row{gap:15px} .product{width:180px;height:280px} }
+  </style>
 </head>
+
 <body>
+  <div class="bg-gif"></div>
+  <div class="bg-overlay"></div>
+  <div class="particles" id="particles"></div>
 
-<h1>NZ HUB</h1>
-<p>Products</p>
+  <header>
+    <div class="logo"><img src="logo.webp" alt="NZ HUB"><span>NZ HUB</span></div>
+    <div class="buttons">
+      <button id="discordBtn">Discord</button>
+      <button id="termsBtn">Terms & Conditions</button>
+    </div>
+  </header>
 
+  <section class="hero">
+    <h1>NZ HUB</h1>
+    <p><span class="underline">Support 24/7 in our Discord. 100% legit and fast</span></p>
+  </section>
+
+  <section class="products">
+    <div class="products-row">
+      <div class="product" data-modal="modal-nitro">
+        <img src="Discord-nitro.jpg" alt="N1TRO BOOST">
+        <h3>N1TR0 B00ST</h3>
+        <span class="buy-btn">BUY ON DISCORD</span>
+      </div>
+      <div class="product" data-modal="modal-server">
+        <img src="p1_3353863_fc337ffe.webp" alt="SERVER BOOST">
+        <h3>SERVER B00ST</h3>
+        <span class="buy-btn">BUY ON DISCORD</span>
+      </div>
+    </div>
+    <div class="products-row">
+      <div class="product" data-modal="modal-decos">
+        <img src="decos.png" alt="DECORATIONS">
+        <h3>DECORATIONS</h3>
+        <span class="buy-btn">BUY ON DISCORD</span>
+      </div>
+      <div class="product" data-modal="modal-effects">
+        <img src="image1.png" alt="EFFECTS">
+        <h3>EFFECTS</h3>
+        <span class="buy-btn">BUY ON DISCORD</span>
+      </div>
+      <div class="product" data-modal="modal-nameplates">
+        <img src="Nameplate_in_Discord_600x.webp" alt="NAMEPLATES">
+        <h3>NAMEPLATES</h3>
+        <span class="buy-btn">BUY ON DISCORD</span>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 NZ HUB. All rights reserved. <br>
+    <a href="https://discord.gg/RCTWSyqguQ" target="_blank" style="color:#00f0ff;">Join our Discord</a>
+  </footer>
+
+  <!-- Modales de productos -->
+  <div id="modal-nitro" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>N1TR0 B00ST</h2><p>⭐Upgrade your Discord account with n1tr0 b00st⭐</p><a href="https://discord.gg/RCTWSyqguQ" target="_blank" class="buy-btn">BUY ON DISCORD</a></div></div>
+  <div id="modal-server" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>SERVER B00ST</h2><p>🚀Upgrade your servers with server b00st🚀</p><a href="https://discord.gg/RCTWSyqguQ" target="_blank" class="buy-btn">BUY ON DISCORD</a></div></div>
+  <div id="modal-decos" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>DECORATIONS</h2><p>💎Decorate your Discord profile with exclusive visual elements💎</p><a href="https://discord.gg/RCTWSyqguQ" target="_blank" class="buy-btn">BUY ON DISCORD</a></div></div>
+  <div id="modal-effects" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>EFFECTS</h2><p>🧨Special effects to personalize your Discord profile🧨</p><a href="https://discord.gg/RCTWSyqguQ" target="_blank" class="buy-btn">BUY ON DISCORD</a></div></div>
+  <div id="modal-nameplates" class="modal"><div class="modal-content"><span class="close">&times;</span><h2>NAMEPLATES</h2><p>🔥You appear in the user list with a custom and exclusive background to stand out🔥</p><a href="https://discord.gg/RCTWSyqguQ" target="_blank" class="buy-btn">BUY ON DISCORD</a></div></div>
+
+  <!-- Discord Modal -->
+  <div id="discordModal" class="modal">
+    <div class="modal-content">
+      <span class="close" id="closeDiscord">&times;</span>
+      <h2>Discord</h2>
+      <p>Join our Discord server and don't miss any news!</p>
+      <p><a href="https://discord.gg/RCTWSyqguQ" target="_blank">https://discord.gg/RCTWSyqguQ</a></p>
+    </div>
+  </div>
+
+  <!-- Terms Modal -->
+  <div id="termsModal" class="modal">
+    <div class="modal-content terms-content">
+      <span class="close" id="closeTerms">&times;</span>
+      <h2>Terms & Conditions</h2>
+
+      <h3>About the store</h3>
+      <p>This is an unofficial store that operates solely within Discord. We sell digital products for FiveM.</p>
+
+      <h3>Products</h3>
+      <ul>
+        <li>👕 FiveM Clothing</li>
+        <li>🚀 N1tr0 boosts / Server boosts</li>
+        <li>🏷️ Nameplates</li>
+        <li>🏠 Decorations and extras</li>
+        <li>All products are digital.</li>
+      </ul>
+
+      <h3>Payments</h3>
+      <ul>
+        <li>Payments are made via PayPal.</li>
+        <li>Once payment is made, refunds are not accepted, except in the case of our error.</li>
+      </ul>
+
+      <h3>Delivery</h3>
+      <ul>
+        <li>Delivery is usually immediate or within a reasonable timeframe of 24 hours; otherwise, a refund will be issued.</li>
+      </ul>
+
+      <h3>Returns and exchanges</h3>
+      <ul>
+        <li>There are no returns on products that have already been delivered.</li>
+        <li>If there is any problem (bug, error, misunderstanding), it will be reviewed on a case-by-case basis.</li>
+      </ul>
+
+      <h3>Modifications</h3>
+      <ul>
+        <li>We reserve the right to modify products, prices, or these rules as needed.</li>
+      </ul>
+
+      <h3>Support</h3>
+      <ul>
+        <li>For questions or problems, please join <a href="https://discord.com/channels/1464216501773930506/1464321724404465939" target="_blank">our Discord</a> or contact our staff.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    // Crear partículas
+    const particlesContainer = document.getElementById('particles');
+    for(let i=0;i<50;i++){
+      const p=document.createElement('div');
+      p.classList.add('particle');
+      p.style.left=Math.random()*100+'vw';
+      p.style.animationDuration=5+Math.random()*10+'s';
+      p.style.width=1+Math.random()*3+'px';
+      p.style.height=p.style.width;
+      particlesContainer.appendChild(p);
+    }
+
+    // Abrir modal al click de tarjeta
+    const products = document.querySelectorAll('.product');
+    products.forEach(prod => {
+      prod.addEventListener('click',()=>{ 
+        document.getElementById(prod.dataset.modal).style.display='block'; 
+      });
+    });
+
+    // Abrir modal de Discord y Terms
+    document.getElementById('discordBtn').addEventListener('click',()=> {
+      document.getElementById('discordModal').style.display='block';
+    });
+    document.getElementById('termsBtn').addEventListener('click',()=> {
+      document.getElementById('termsModal').style.display='block';
+    });
+
+    // Cerrar modales
+    const closes = document.querySelectorAll('.modal .close');
+    closes.forEach(btn => btn.addEventListener('click',()=> btn.parentElement.parentElement.style.display='none'));
+    window.addEventListener('click', e=>{ if(e.target.classList.contains('modal')) e.target.style.display='none'; });
+  </script>
 </body>
 </html>
+
